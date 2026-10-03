@@ -1,0 +1,32 @@
+// This is your Prisma schema file — it describes your database shape.
+// Local dev uses SQLite (a single file, zero setup).
+// For production/Vercel, swap provider to "postgresql" and point DATABASE_URL
+// at your Neon/Supabase connection string (see README.md).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // hashed with bcrypt, never stored in plain text
+  name      String?
+  createdAt DateTime @default(now())
+  tasks     Task[]
+}
+
+model Task {
+  id        String   @id @default(cuid())
+  title     String
+  done      Boolean  @default(false)
+  priority  String   @default("normal") // "low" | "normal" | "high"
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
