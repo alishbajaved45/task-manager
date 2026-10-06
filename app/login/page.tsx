@@ -11,7 +11,7 @@ export default async function LoginPage() {
     <main className="shell auth-shell">
       <header className="app-header">
         <h1>Log in</h1>
-        <p>Welcome back — your tasks are waiting.</p>
+        <p>Welcome back your tasks are waiting.</p>
       </header>
 
       <LoginForm />
